@@ -1,6 +1,5 @@
 package facade;
 public class Order {
-
     public int id;
     public String item;
     public String customer;
