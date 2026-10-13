@@ -1,6 +1,16 @@
 package service;
+import java.util.*;
+
 public class NotificationService {
-    public void send(String customer) {
-        System.out.println("Notification sent to: " + customer);
+    private List<String> messages = new ArrayList<>();
+
+    public void send(String customer, String message) {
+        String text = customer + ": " + message;
+        messages.add(text);
+        System.out.println("Notification: " + text);
+    }
+
+    public int getCount() {
+        return messages.size();
     }
 }
