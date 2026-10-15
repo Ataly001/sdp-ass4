@@ -1,0 +1,74 @@
+
+@startuml
+title Online Order Processing - Facade Pattern
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class Main {
+    + {static} main(args: String[]): void
+}
+
+class OrderFacade <<Facade>> {
+    - inventory: InventoryService
+    - payment: PaymentService
+    - shipping: ShippingService
+    - notification: NotificationService
+    - orders: Map<Integer, Order>
+    - nextId: int
+    + placeOrder(item: String, customer: String, approved: boolean): int
+    + cancelOrder(orderId: int): boolean
+    + showStock(item: String): void
+    + showBalance(): void
+    + showShipping(orderId: int): void
+    + showNotifications(): void
+}
+
+class Order {
+    + id: int
+    + item: String
+    + customer: String
+    + price: int
+    + cancelled: boolean
+    + Order(id: int, item: String, customer: String, price: int)
+}
+
+class InventoryService {
+    - stock: Map<String, Integer>
+    - prices: Map<String, Integer>
+    + InventoryService()
+    + reserve(item: String): boolean
+    + release(item: String): void
+    + getStock(item: String): int
+    + getPrice(item: String): int
+}
+
+class PaymentService {
+    - balance: int
+    + pay(amount: int, approved: boolean): boolean
+    + refund(amount: int): void
+    + getBalance(): int
+}
+
+class ShippingService {
+    - deliveries: Map<Integer, String>
+    + ship(orderId: int, item: String): void
+    + cancel(orderId: int): void
+    + getStatus(orderId: int): String
+}
+
+class NotificationService {
+    - messages: List<String>
+    + send(customer: String, message: String): void
+    + getCount(): int
+}
+
+Main ..> OrderFacade : uses
+
+OrderFacade *-- InventoryService
+OrderFacade *-- PaymentService
+OrderFacade *-- ShippingService
+OrderFacade *-- NotificationService
+OrderFacade *-- "0..*" Order : stores
+
+@enduml
