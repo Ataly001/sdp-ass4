@@ -8,8 +8,10 @@ public class InventoryService {
     public InventoryService() {
         stock.put("Headphones", 2);
         stock.put("Keyboard", 1);
+        stock.put("BrokenItem", 1);
         prices.put("Headphones", 100);
         prices.put("Keyboard", 150);
+        prices.put("BrokenItem", 50);
     }
 
     public boolean reserve(String item) {

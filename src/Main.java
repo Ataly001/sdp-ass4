@@ -1,4 +1,4 @@
-import facade.*;
+import facade.OrderFacade;
 public class Main {
     public static void main(String[] args) {
         OrderFacade order = new OrderFacade();
@@ -27,5 +27,25 @@ public class Main {
         order.showBalance();
         order.showShipping(id);
         order.showNotifications();
+
+        System.out.println();
+
+        System.out.println("TEST 5: Shipping failure");
+        order.placeOrder("BrokenItem", "Ataly", true);
+        order.showStock("BrokenItem");
+        order.showBalance();
+
+        System.out.println();
+
+        System.out.println("TEST 6: Cancel again");
+        order.cancelOrder(id);
+        order.showBalance();
+
+        System.out.println();
+
+        System.out.println("TEST 7: Multiple orders");
+        order.placeOrder("Headphones", "Ali", true);
+        order.placeOrder("Keyboard", "Dana", true);
+        order.showBalance();
     }
 }

@@ -5,7 +5,7 @@ title Online Order Processing - Facade Pattern
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 
-class Main {
+class Main <<Client>> {
     + {static} main(args: String[]): void
 }
 
@@ -25,12 +25,18 @@ class OrderFacade <<Facade>> {
 }
 
 class Order {
-    + id: int
-    + item: String
-    + customer: String
-    + price: int
-    + cancelled: boolean
+    - id: int
+    - item: String
+    - customer: String
+    - price: int
+    - cancelled: boolean
     + Order(id: int, item: String, customer: String, price: int)
+    + getId(): int
+    + getItem(): String
+    + getCustomer(): String
+    + getPrice(): int
+    + isCancelled(): boolean
+    + cancel(): void
 }
 
 class InventoryService {
@@ -52,7 +58,7 @@ class PaymentService {
 
 class ShippingService {
     - deliveries: Map<Integer, String>
-    + ship(orderId: int, item: String): void
+    + ship(orderId: int, item: String): boolean
     + cancel(orderId: int): void
     + getStatus(orderId: int): String
 }
@@ -69,6 +75,6 @@ OrderFacade *-- InventoryService
 OrderFacade *-- PaymentService
 OrderFacade *-- ShippingService
 OrderFacade *-- NotificationService
-OrderFacade *-- "0..*" Order : stores
+OrderFacade --> "0..*" Order : stores
 
 @enduml
